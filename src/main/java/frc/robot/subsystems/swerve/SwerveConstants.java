@@ -1,0 +1,30 @@
+package frc.robot.subsystems.swerve;
+
+import com.ctre.phoenix.sensors.Pigeon2;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+
+public class SwerveConstants {
+    static final double VALUE_TOLERANCE = 0.1;
+    static final double
+            MAX_SPEED_METERS_PER_SECOND = 4.25,
+            MAX_ROTATIONAL_SPEED_RADIANS_PER_SECOND = 12.03;
+    static final double DRIVE_RAMP_RATE = 0.3;
+    static final double DEAD_BAND_DRIVE_DEADBAND = 0.1;
+    static final double NO_TARGET_SPIN_RADIANS = 5;
+    private static final Translation2d[] LOCATIONS = {
+            SwerveModuleConstants.SwerveModules.fromId(0).location,
+            SwerveModuleConstants.SwerveModules.fromId(1).location,
+            SwerveModuleConstants.SwerveModules.fromId(2).location,
+            SwerveModuleConstants.SwerveModules.fromId(3).location
+    };
+    private static final int PIGEON_ID = 25;
+    static final Pigeon2 GYRO = new Pigeon2(PIGEON_ID);
+    static SwerveModule[] SWERVE_MODULES = {
+            new SwerveModule(SwerveModuleConstants.SwerveModules.fromId(0).swerveModuleConstants),
+            new SwerveModule(SwerveModuleConstants.SwerveModules.fromId(1).swerveModuleConstants),
+            new SwerveModule(SwerveModuleConstants.SwerveModules.fromId(2).swerveModuleConstants),
+            new SwerveModule(SwerveModuleConstants.SwerveModules.fromId(3).swerveModuleConstants)
+    };
+    static SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(LOCATIONS);
+}
