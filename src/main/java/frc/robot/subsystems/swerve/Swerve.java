@@ -78,15 +78,15 @@ public class Swerve extends SubsystemBase {
     }
 
     private void setTargetModuleStates(SwerveModuleState[] targetSwerveModuleStates) {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++) {
             SwerveConstants.SWERVE_MODULES[i].setTargetState(targetSwerveModuleStates[i]);
+        }
     }
 
     private boolean isStill(ChassisSpeeds chassisSpeeds) {
-        return
-                Math.abs(chassisSpeeds.vxMetersPerSecond) < SwerveConstants.DEAD_BAND_DRIVE_DEADBAND &&
-                        Math.abs(chassisSpeeds.vyMetersPerSecond) < SwerveConstants.DEAD_BAND_DRIVE_DEADBAND &&
-                        Math.abs(chassisSpeeds.omegaRadiansPerSecond) < SwerveConstants.DEAD_BAND_DRIVE_DEADBAND;
+        return Math.abs(chassisSpeeds.vxMetersPerSecond) < SwerveConstants.DEAD_BAND_DRIVE_DEADBAND &&
+                Math.abs(chassisSpeeds.vyMetersPerSecond) < SwerveConstants.DEAD_BAND_DRIVE_DEADBAND &&
+                Math.abs(chassisSpeeds.omegaRadiansPerSecond) < SwerveConstants.DEAD_BAND_DRIVE_DEADBAND;
     }
 
     private Rotation2d getHeading() {

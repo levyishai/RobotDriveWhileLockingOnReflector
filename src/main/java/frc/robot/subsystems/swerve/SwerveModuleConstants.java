@@ -9,6 +9,18 @@ import edu.wpi.first.math.geometry.Translation2d;
 import java.util.List;
 
 public class SwerveModuleConstants {
+    final WPI_TalonFX driveMotor, angleMotor;
+    final WPI_TalonSRX angleEncoder;
+    final double encoderOffset;
+
+    SwerveModuleConstants(
+            WPI_TalonFX driveMotor, WPI_TalonFX angleMotor, WPI_TalonSRX angleEncoder, double encoderOffset) {
+        this.driveMotor = driveMotor;
+        this.angleMotor = angleMotor;
+        this.angleEncoder = angleEncoder;
+        this.encoderOffset = encoderOffset;
+    }
+
     static final double DRIVE_GEAR_RATIO = 8.14;
     private static final double VOLTAGE_COMP_SATURATION = 12;
     private static final double
@@ -173,18 +185,6 @@ public class SwerveModuleConstants {
         REAR_RIGHT_ANGLE_MOTOR.config_kP(0, REAR_RIGHT_PID.p);
         REAR_RIGHT_ANGLE_MOTOR.config_kI(0, REAR_RIGHT_PID.i);
         REAR_RIGHT_ANGLE_MOTOR.config_kD(0, REAR_RIGHT_PID.d);
-    }
-
-    final WPI_TalonFX driveMotor, angleMotor ;
-    final WPI_TalonSRX angleEncoder;
-    final double encoderOffset;
-
-    SwerveModuleConstants(
-            WPI_TalonFX driveMotor, WPI_TalonFX angleMotor, WPI_TalonSRX angleEncoder, double encoderOffset) {
-        this.driveMotor = driveMotor;
-        this.angleMotor = angleMotor;
-        this.angleEncoder = angleEncoder;
-        this.encoderOffset = encoderOffset;
     }
 
     /**

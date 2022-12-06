@@ -102,19 +102,22 @@ public class SwerveModule {
         return Rotation2d.fromDegrees(getCurrentDegrees());
     }
 
-    private double scope(double angle) {
+    private double scope(double targetAngle) {
         final double rawCurrentAngle = getCurrentDegrees() % 360;
-        final double rawTargetAngle = angle % 360;
-        final double difference = rawTargetAngle - rawCurrentAngle;
+        final double rawTargetAngle = targetAngle % 360;
+        double difference = rawTargetAngle - rawCurrentAngle;
 
-        if (difference > 180)
-            return angle + 360;
+        if (difference < -180) {
+            difference += 360;
+        } else if (difference > 180) {
+            difference -= 360;
+        }
 
-        return angle - 360;
+        return difference + getCurrentDegrees();
     }
 
     private void configureRemoteSensor() {
-        angleMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
         angleMotor.configRemoteFeedbackFilter(angleEncoder, 0);
+        angleMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
     }
 }
