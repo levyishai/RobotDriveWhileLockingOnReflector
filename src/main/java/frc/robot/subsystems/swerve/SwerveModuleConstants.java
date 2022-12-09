@@ -25,7 +25,7 @@ public class SwerveModuleConstants {
     private static final double VOLTAGE_COMP_SATURATION = 12;
     private static final double
             FRONT_LEFT_ENCODER_OFFSET = 3501,
-            FRONT_RIGHT_ENCODER_OFFSET = 2639,
+            FRONT_RIGHT_ENCODER_OFFSET = 2627,
             RIGHT_LEFT_ENCODER_OFFSET = 1673,
             REAR_RIGHT_ENCODER_OFFSET = 315;
     private static final double
