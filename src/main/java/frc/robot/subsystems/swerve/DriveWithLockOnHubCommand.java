@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.utilities.Maths;
 
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
@@ -44,7 +45,7 @@ public class DriveWithLockOnHubCommand extends CommandBase {
     public void execute() {
         pidController.setSetpoint(targetSupplier.getAsDouble());
 
-        swerve.selfRelativeDrive(getAsTranslation2d(), getAsRotation2d());
+        swerve.selfRelativeDrive(getPowerAsTranslation2d(), getAsRotation2dToTurn());
     }
 
     @Override
@@ -52,13 +53,16 @@ public class DriveWithLockOnHubCommand extends CommandBase {
         swerve.stop();
     }
 
-    private Rotation2d getAsRotation2d() {
-        final Pose2d robotPoseRelativeToHub = robotPoseSupplier.get().relativeTo(SwerveConstants.HUB_POSE);
+    private Rotation2d getAsRotation2dToTurn() {
+        final double degreesFromHub = Maths.getRelativeAngleFromTranslation(
+                robotPoseSupplier.get(), SwerveConstants.HUB_POSE.getTranslation());
 
-        return new Rotation2d(pidController.calculate(robotPoseRelativeToHub.getRotation().getDegrees()));
+        return new Rotation2d(pidController.calculate(degreesFromHub));
     }
 
-    private Translation2d getAsTranslation2d() {
-        return new Translation2d(xPower.getAsDouble() * SwerveConstants.MAX_SPEED_METERS_PER_SECOND, yPower.getAsDouble() * SwerveConstants.MAX_SPEED_METERS_PER_SECOND);
+    private Translation2d getPowerAsTranslation2d() {
+        return new Translation2d(
+                xPower.getAsDouble() * SwerveConstants.MAX_SPEED_METERS_PER_SECOND,
+                yPower.getAsDouble() * SwerveConstants.MAX_SPEED_METERS_PER_SECOND);
     }
 }
