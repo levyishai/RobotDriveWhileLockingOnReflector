@@ -8,6 +8,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Swerve extends SubsystemBase {
     private final static Swerve INSTANCE = new Swerve();
     private final Pigeon2 gyro = SwerveConstants.GYRO;
@@ -42,7 +45,7 @@ public class Swerve extends SubsystemBase {
                 rotation2d.getRadians()
         );
 
-        selfRelativeDrive(chassisSpeeds);
+        driveWithChassisSpeeds(chassisSpeeds);
     }
 
     /**
@@ -59,14 +62,30 @@ public class Swerve extends SubsystemBase {
                 getHeading()
         );
 
-        selfRelativeDrive(chassisSpeeds);
+        driveWithChassisSpeeds(chassisSpeeds);
     }
 
-    private void zeroHeading() {
-        setHeading(0);
+    /**
+     * @return the gyro's yaw in Rotation2d
+     */
+    Rotation2d getHeading() {
+        return Rotation2d.fromDegrees(gyro.getYaw());
     }
 
-    private void selfRelativeDrive(ChassisSpeeds chassisSpeeds) {
+    /**
+     * @return the swerve module states
+     */
+    SwerveModuleState[] getSwerveModuleStates() {
+        final List<SwerveModuleState> swerveModuleStates = new ArrayList<>();
+
+        for (SwerveModule currentModule : SwerveConstants.SWERVE_MODULES) {
+            swerveModuleStates.add(currentModule.getCurrentState());
+        }
+
+        return swerveModuleStates.toArray(SwerveModuleState[]::new);
+    }
+
+    private void driveWithChassisSpeeds(ChassisSpeeds chassisSpeeds) {
         if (isStill(chassisSpeeds)) {
             stop();
             return;
@@ -75,6 +94,10 @@ public class Swerve extends SubsystemBase {
         final SwerveModuleState[] targetSwerveModuleState = SwerveConstants.KINEMATICS.toSwerveModuleStates(chassisSpeeds);
 
         setTargetModuleStates(targetSwerveModuleState);
+    }
+
+    private void zeroHeading() {
+        setHeading(0);
     }
 
     private void setTargetModuleStates(SwerveModuleState[] targetSwerveModuleStates) {
@@ -87,10 +110,6 @@ public class Swerve extends SubsystemBase {
         return Math.abs(chassisSpeeds.vxMetersPerSecond) < SwerveConstants.DEAD_BAND_DRIVE_DEADBAND &&
                 Math.abs(chassisSpeeds.vyMetersPerSecond) < SwerveConstants.DEAD_BAND_DRIVE_DEADBAND &&
                 Math.abs(chassisSpeeds.omegaRadiansPerSecond) < SwerveConstants.DEAD_BAND_DRIVE_DEADBAND;
-    }
-
-    private Rotation2d getHeading() {
-        return Rotation2d.fromDegrees(gyro.getYaw());
     }
 
     private void setHeading(double yaw) {
