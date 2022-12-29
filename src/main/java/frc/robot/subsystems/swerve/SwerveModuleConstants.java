@@ -24,10 +24,10 @@ public class SwerveModuleConstants {
     static final double DRIVE_GEAR_RATIO = 8.14;
     private static final double VOLTAGE_COMP_SATURATION = 12;
     private static final double
-            FRONT_LEFT_ENCODER_OFFSET = 3501,
-            FRONT_RIGHT_ENCODER_OFFSET = 2627,
-            RIGHT_LEFT_ENCODER_OFFSET = 1673,
-            REAR_RIGHT_ENCODER_OFFSET = 315;
+            FRONT_LEFT_ENCODER_OFFSET = 1689,
+            FRONT_RIGHT_ENCODER_OFFSET = 2114,
+            REAR_LEFT_ENCODER_OFFSET = -786,
+            REAR_RIGHT_ENCODER_OFFSET = 202;
     private static final double
             WHEEL_DIAMETER_METERS = 0.1,
             SIDE_LENGTH_METERS = 0.5;
@@ -118,7 +118,7 @@ public class SwerveModuleConstants {
                     REAR_LEFT_DRIVE_MOTOR,
                     REAR_LEFT_ANGLE_MOTOR,
                     REAR_LEFT_ANGLE_ENCODER,
-                    RIGHT_LEFT_ENCODER_OFFSET
+                    REAR_LEFT_ENCODER_OFFSET
             ),
             REAR_RIGHT_SWERVE_MODULE_CONSTANTS = new SwerveModuleConstants(
                     REAR_RIGHT_DRIVE_MOTOR,
